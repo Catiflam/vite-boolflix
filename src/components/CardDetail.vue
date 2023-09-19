@@ -1,17 +1,24 @@
 <script>
+import { poster } from "./data/static";
+
 export default {
 	props: {
 		cardInfo: Object,
 	},
 	computed: {
 		hasFlag() {
-			const allowedFlags = ["en", "it"];
+			const allowedFlags = ["En", "it", "us"];
 			return allowedFlags.includes(this.cardInfo.language);
 		},
 
 		flagSrc() {
-			const flagUrl = new URL(`./../assets/img/${this.cardInfo.language}.png`, import.meta.url);
+			const flagUrl = new URL(`../../assets/img/${this.cardInfo.language}.png`, import.meta.url);
 			return flagUrl.href;
+		},
+
+		posterSrc() {
+			if (!this.cardInfo.posterPath) return "path to img default";
+			return `${poster.baseUrl}${poster.size}${this.cardInfo.posterPath}`;
 		},
 	},
 };
@@ -27,7 +34,7 @@ export default {
 							{{ cardInfo.name }}
 						</li>
 						<li>
-							{{ cardInfo.title }}
+							{{ cardInfo.original_title }}
 						</li>
 						<li v-if="hasFlag">
 							<img :src="flagSrc" :alt="cardInfo.language" />
@@ -35,7 +42,9 @@ export default {
 						<li>
 							{{ cardInfo.vote }}
 						</li>
-						<li></li>
+						<li>
+							<img :src="posterSrc" alt="" />
+						</li>
 					</ul>
 				</h5>
 			</div>

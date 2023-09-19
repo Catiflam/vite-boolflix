@@ -6,6 +6,7 @@ import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
 
 const api_key = "20b4b109d496b6449e7be57748b5e994";
+
 export default {
 	data() {
 		return {
@@ -25,10 +26,23 @@ export default {
 					},
 				})
 				.then((response) => {
-					console.log(response);
+					// console.log(response);
 					store.movies = response.data.results.map((movie) => {
-						const { id, title, original_title, original_language, vote_average } = movie;
-						return { id, name: title, title: original_title, language: original_language, vote: Math.ceil(vote_average / 2) };
+						const id = movie.id;
+						const name = movie.title;
+						const original_title = movie.original_title;
+						const language = movie.original_language;
+						const vote = Math.ceil(movie.vote_average / 2);
+						const posterPath = movie.poster_path;
+
+						return {
+							id,
+							name,
+							original_title,
+							language,
+							vote,
+							posterPath,
+						};
 					});
 				});
 		},
@@ -44,8 +58,21 @@ export default {
 				.then((response) => {
 					console.log(response);
 					store.series = response.data.results.map((serie) => {
-						const { id, title, original_title, original_language, vote_average } = serie;
-						return { id, name: title, title: original_title, language: original_language, vote: Math.ceil(vote_average / 2) };
+						const id = serie.id;
+						const name = serie.title;
+						const original_title = serie.original_title;
+						const language = serie.original_language;
+						const vote = Math.ceil(serie.vote_average / 2);
+						const posterPath = serie.poster_path;
+
+						return {
+							id,
+							name,
+							original_title,
+							language,
+							vote,
+							posterPath,
+						};
 					});
 				});
 		},
